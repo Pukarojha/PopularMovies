@@ -62,38 +62,39 @@ public class MainActivity extends AppCompatActivity {
         String url ="https://api.themoviedb.org/3/movie/popular?api_key=f216aa28291dcb2195fd3473f9515674&language=en-US&page=1";
 
 
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest (Request.Method.GET, url,  null, response -> {
-//            try {
-//                JSONArray jsonArray = response.getJSONArray(  "results");
-//                for (int i=0; i< jsonArray.length(); i++) {
-//
-//                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                    String title = jsonObject.getString("title");
-//                    String overview = jsonObject.getString("overview");
-//                    double rating = jsonObject.getDouble("vote_average");
-//                    String imgUrl = "https://image.tmdb.org/t/p/w300" +
-//                            jsonObject.getString("poster_path");
-//                    Movie movie = new Movie(title, imgUrl, rating, overview);
-//                    movieList.add(movie);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//            //at this point for loop is completed and all our data is now present inside the movieList variable.
-//
-//            RecyclerAdapter adapter = new RecyclerAdapter (MainActivity.this , movieList);
-//
-//            recyclerView.setAdapter(adapter);
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
-//requestQueue.add(jsonObjectRequest);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest (Request.Method.GET, url,  null, response -> {
+            try {
+                JSONArray jsonArray = response.getJSONArray(  "results");
+                for (int i=0; i< jsonArray.length(); i++) {
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String title = jsonObject.getString("title");
+                    String overview = jsonObject.getString("overview");
+                    double rating = jsonObject.getDouble("vote_average");
+                    String imgUrl = "https://image.tmdb.org/t/p/w300" +
+                            jsonObject.getString("poster_path");
+                    Movie movie = new Movie(title, imgUrl, rating, overview);
+                    movieList.add(movie);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            //at this point for loop is completed and all our data is now present inside the movieList variable.
+
+            RecyclerAdapter adapter = new RecyclerAdapter (MainActivity.this , movieList);
+
+            recyclerView.setAdapter(adapter);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+requestQueue.add(jsonObjectRequest);
 
     }
 }

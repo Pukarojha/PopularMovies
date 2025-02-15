@@ -2,6 +2,8 @@ package com.example.popularmovies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -44,6 +47,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.title.setText(movie.getTitle());
         holder.overview.setText(movie.getOverview());
         Picasso.get().load(movie.getPoster()).into(holder.image);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("title", movie.getTitle());
+                bundle.putString("overview", movie.getOverview());
+                bundle.putString("poster", movie.getPoster());
+                bundle.putDouble("rating", movie.getRating());
+
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -59,6 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView title;
         TextView rating;
         TextView overview;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +86,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             title = itemView.findViewById(R.id.movie_title);
             rating = itemView.findViewById(R.id.movie_rating);
             overview = itemView.findViewById(R.id.overview);
+            cardView = itemView.findViewById(R.id.card_view);
         }
     }
 }

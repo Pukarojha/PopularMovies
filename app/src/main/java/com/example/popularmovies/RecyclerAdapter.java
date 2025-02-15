@@ -21,6 +21,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<Movie> movieList;
     private Context context;
 
+    public RecyclerAdapter(Context context, ArrayList<Movie> movies ){
+        this.context = context;
+        movieList = movies;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
